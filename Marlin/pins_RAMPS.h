@@ -26,7 +26,7 @@
  * Applies to the following boards:
  *
  *  RAMPS_14_EFB (Hotend, Fan, Bed)
- *  RAMPS_14_EEB (Hotend0, Hotend1, Bed)
+ *  RAMPS_14_EEB (Hotend0, Hotend1, Bed)   <-----------
  *  RAMPS_14_EFF (Hotend, Fan0, Fan1)
  *  RAMPS_14_EEF (Hotend0, Hotend1, Fan)
  *  RAMPS_14_SF  (Spindle, Controller Fan)
@@ -60,11 +60,11 @@
 #ifdef IS_RAMPS_13
   #define SERVO0_PIN        7 // RAMPS_13 // Will conflict with BTN_EN2 on LCD_I2C_VIKI
 #else
-  #define SERVO0_PIN       11
+  #define SERVO0_PIN       11 // D11 now used by BLtouch
 #endif
 #define SERVO1_PIN          6
-#define SERVO2_PIN          5
-#define SERVO3_PIN          4
+//#define SERVO2_PIN          5 //used by Geetech Fan Buffer
+//#define SERVO3_PIN          4
 
 //
 // Limit Switches
@@ -170,7 +170,7 @@
 #elif ENABLED(IS_RAMPS_EEF)                    // Hotend, Hotend, Fan
   #define HEATER_1_PIN   RAMPS_D9_PIN
   #define FAN_PIN        RAMPS_D8_PIN
-#elif ENABLED(IS_RAMPS_EEB)                    // Hotend, Hotend, Bed
+#elif ENABLED(IS_RAMPS_EEB)                    // Hotend, Hotend, Bed <----------
   #define HEATER_1_PIN   RAMPS_D9_PIN
   #define HEATER_BED_PIN RAMPS_D8_PIN
 #elif ENABLED(IS_RAMPS_EFF)                    // Hotend, Fan, Fan
@@ -189,7 +189,10 @@
 #endif
 
 #ifndef FAN_PIN
-  #define FAN_PIN 4      // IO pin. Buffer needed
+  #define FAN_PIN 4      // D4 IO pin. Buffer needed
+#endif
+#ifndef FAN1_PIN
+  #define FAN_PIN 5      // D5 IO pin. Buffer needed
 #endif
 
 //
@@ -199,10 +202,10 @@
 #define LED_PIN            13
 
 // Use the RAMPS 1.4 Analog input 5 on the AUX2 connector
-#define FILWIDTH_PIN        5   // Analog Input
+#define FILWIDTH_PIN        5   // A5 Analog Input
 
 // define digital pin 4 for the filament runout sensor. Use the RAMPS 1.4 digital input 4 on the servos connector
-#define FIL_RUNOUT_PIN      4
+//#define FIL_RUNOUT_PIN      4  //D4 used by Fan buffer
 
 #define PS_ON_PIN          12
 
