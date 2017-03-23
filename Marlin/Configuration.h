@@ -178,8 +178,9 @@
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
 // The offset has to be X=0, Y=0 for the extruder 0 hotend (default extruder).
 // For the other hotends it is their distance from the extruder 0 hotend.
-//#define HOTEND_OFFSET_X {0.0, 20.00} // (in mm) for each extruder, offset of the hotend on the X axis
-//#define HOTEND_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
+#define HOTEND_OFFSET_X {0.0, -33.00} // (in mm) for each extruder, offset of the hotend on the X axis
+#define HOTEND_OFFSET_Y {0.0, 1.50}  // (in mm) for each extruder, offset of the hotend on the Y axis
+// TJD from Repetier, offset was -3300, 150 steps (100 steps/mm)
 
 /**
  * Select your power supply here. Use 0 if you haven't connected the PS_ON_PIN
@@ -317,6 +318,13 @@
   #define  DEFAULT_Kp 18.82
   #define  DEFAULT_Ki 1.47
   #define  DEFAULT_Kd 60.12
+  
+  //TJD Repetier numbers 24V
+  //#define EXT0_PID_PGAIN_OR_DEAD_TIME 17.3
+  //#define EXT0_PID_I 1.57
+  //#define EXT0_PID_D 47.6  
+  //#define EXT0_PID_INTEGRAL_DRIVE_MAX 230
+  //#define EXT0_PID_INTEGRAL_DRIVE_MIN 40
 
   // MakerGear
   //#define  DEFAULT_Kp 7.0
@@ -373,6 +381,10 @@
   #define  DEFAULT_bedKp 97.1
   #define  DEFAULT_bedKi 1.41
   #define  DEFAULT_bedKd 1675.16
+	//TJD from Repetier
+	//#define HEATED_BED_PID_PGAIN_OR_DEAD_TIME   50
+	//#define HEATED_BED_PID_IGAIN   15
+	//#define HEATED_BED_PID_DGAIN 305
   
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -384,7 +396,7 @@
 // or to allow moving the extruder regardless of the hotend temperature.
 // *** IT IS HIGHLY RECOMMENDED TO LEAVE THIS OPTION ENABLED! ***
 #define PREVENT_COLD_EXTRUSION
-#define EXTRUDE_MINTEMP 171
+#define EXTRUDE_MINTEMP 170
 
 // This option prevents a single extrusion longer than EXTRUDE_MAXLENGTH.
 // Note that for Bowden Extruders a too-small value here may prevent loading.
@@ -460,7 +472,7 @@
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
 #define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define Z_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
@@ -1175,7 +1187,7 @@
 //
 // Add individual axis homing items (Home X, Home Y, and Home Z) to the LCD menu.
 //
-//#define INDIVIDUAL_AXIS_HOMING_MENU
+#define INDIVIDUAL_AXIS_HOMING_MENU
 
 //
 // SPEAKER/BUZZER
@@ -1472,21 +1484,21 @@
 #ifdef MTWLED
 
 // patterns
-//                       pattern ID,red,green,blue
-#define mtwled_ready		10,0,30,0	// Marlin Ready
-#define mtwled_startup		10,30,30,30     // Marlin startup
-#define mtwled_temphit  	14,40,40,40      // Hotend is at target temp
-#define mtwled_templow		10,0,40,0       // Hotend heater is slightly lower than target temp
-#define mtwled_temphigh  	10,40,0,0	// Hotend heater is slightly higher than target temp
-#define mtwled_heateroff	11,0,0,40	// Hotend heater is off but still hot
+//                pattern ID,red,green,blue
+#define mtwled_ready	10,0,30,0 	// Marlin Ready
+#define mtwled_startup	10,30,30,30	// Marlin startup
+#define mtwled_temphit  	14,40,40,40	// Hotend is at target temp
+#define mtwled_templow	10,0,40,0 	// Hotend heater is slightly lower than target temp
+#define mtwled_temphigh  	10,40,0,0 	// Hotend heater is slightly higher than target temp
+#define mtwled_heateroff	11,0,0,40 	// Hotend heater is off but still hot
 
 // option switches
-#define MTWLED_cool 35                          // The temp at which the hotend is considered cooled down and safe
-#define MTWLED_swing 4                          // how far off before the temperature is not considered 'at temp' in degrees C
-#define MTWLED_heatmode 2                       // animation type for heat=up pattern: 0=solid color 1=chasing 2=wipe 3=scanner
-#define MTWLED_printmode 0                      // animation type during printing: 0=templow/temphit/temphigh 1=XYZ position
-#define MTWLED_endstoptimer 5                   // how many seconds to display endstop status
-//#define MTWLED_disableheatup                  // uncomment to disable the percentile display as hotend heats up
+#define MTWLED_cool 	35	// The temp at which the hotend is considered cooled down and safe
+#define MTWLED_swing 	4	// how far off before the temperature is not considered 'at temp' in degrees C
+#define MTWLED_heatmode 	2	// animation type for heat=up pattern: 0=solid color 1=chasing 2=wipe 3=scanner
+#define MTWLED_printmode 	0	// animation type during printing: 0=templow/temphit/temphigh 1=XYZ position
+#define MTWLED_endstoptimer 	5	// how many seconds to display endstop status
+//#define MTWLED_disableheatup	// uncomment to disable the percentile display as hotend heats up
 #endif
 /*
 A pattern code is 4 bytes of data: the pattern ID plus one byte each for red, green, blue color values.
@@ -1527,8 +1539,8 @@ M242 P<pattern ID> R<red> E<green> B<blue> T<timer> C<command>
       17 RGB	Repeating Blink
       
 NOTES:
-  Make sure the logic for any endstops that are not installed defaults to untriggered, or disable the endstop pins. Otherwise the
-  LED endstop status may override other events.
+  Make sure the logic for any endstops that are not installed defaults to untriggered,
+   or disable the endstop pins. Otherwise the LED endstop status may override other events.
 */
 
 
